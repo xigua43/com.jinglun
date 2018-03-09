@@ -29,7 +29,7 @@ public class Test {
 		detailMapper de= (detailMapper) spring.getBean("detailMapper");
 		detailExample ex = new detailExample();
 		Criteria  c = ex.createCriteria();
-		PageHelper.startPage(6,3);
+		PageHelper.startPage(1,5);
 		List<detail> l = de.selectByExample(null);
 		if(l.size()==0){
 			System.out.println("meiyoushuju");
