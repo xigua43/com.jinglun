@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	<!--自动扫描的包-->
+	<context:component-scan base-package="com.jinglun.news">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	<!--自动扫描的属性文件-->
+	<context:property-placeholder  location="classpath:*.properties"/>
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!--开启注解事务管理器-->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<!--开启务管理器-->
+
+	<!--配置数据源-->
+	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="username" value="${user}"></property>
+		<property name="url" value="${url}"></property>
+		<property name="password" value="${password}"></property>
+		<property name="driverClassName" value="${driver}"></property>
+		<!--初始化最小连接数-->
+		<property name="initialSize" value="10"></property>
+		<!--最大并发数-->
+		<property name="maxActive" value="100"></property>
+		<!--最长等待时间-->
+		<property name="maxWait" value="5"></property>
+		<!--最小空闲连接-->
+		<property name="minIdle" value="5"></property>
+		<!--间隔多久检测空闲连接并关闭（毫秒）-->
+		<property name="timeBetweenEvictionRunsMillis" value="60000"></property>
+		<property name="filters" value="stat" />
+	</bean>
+	<!--创建sqlsessionfactorybean-->
+ 	<bean name="sqlsessionfactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:Mybatis_config.xml"></property>
+		<property name="mapperLocations" value="classpath:com/jinglun/news/dao/*.xml"></property>
+			  <!-- 注意其他配置 -->
+			  <property name="plugins">
+			    <array>
+			      <bean class="com.github.pagehelper.PageInterceptor">
+			        <property name="properties">
+			          <!--使用下面的方式配置参数，一行配置一个 -->
+			          <value>
+			            params=value1
+			          </value>
+			        </property>
+			      </bean>
+			    </array>
+			  </property>
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!-- 自动对应接口生成dao代理实现类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.jinglun.news.dao"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlsessionfactory"></property>
+	</bean>
+</beans>
