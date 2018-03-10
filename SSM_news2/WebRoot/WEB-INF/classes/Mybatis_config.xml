@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- 通过这个配置文件完成mybatis与数据库的连接 -->
+
+<configuration>
+	<!-- 引入 database.properties 文件-->
+	<!-- 配置mybatis的log实现为LOG4J -->
+	<settings>
+		<setting name="logImpl" value="LOG4J" />
+		<!-- 自动映射列和属性,默认开启为partial，不开启是none，全开启full -->
+		<!-- <setting name="autoMappingBehavior" value="none"/> -->
+	</settings>
+	<!-- 别名映射 -->
+	<typeAliases>
+		<!-- 为指定的类起别名 -->
+		<!-- 批量起别名  不自定义默认是类名不区分大小写 或者注解@Alias()起别名-->
+		<!-- 推荐使用全类名，方便进入类 -->
+	</typeAliases>
+	<!-- 环境标签 mybatis 可以配置多个环境 -->
+	<!-- 将mapper文件加入到配置文件中 -->
+	<!-- 将SQL映射文件注册到全局变量 -->
+	<!-- resource 或者 url 两种方式 -->
+	<!-- 也可以注册接口 class = ‘’  映射文件必须和接口同名，并且放在接口同一目录下 -->
+	<!-- 注解开发sql语句写在方法上 -->
+</configuration>
