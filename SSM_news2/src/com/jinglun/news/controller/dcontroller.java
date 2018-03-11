@@ -22,7 +22,7 @@ import com.jinglun.news.service.Dservice;
 @Controller
 public class dcontroller {
 	Gson G = new Gson();
-	11sss
+	11sssssss
 /*	Gson gson = new GsonBuilder()  
 			  .setDateFormat("yyyy-MM-dd HH:mm:ss")  
 			  .create();  */
