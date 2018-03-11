@@ -22,10 +22,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$.post("findall.do",function(obj){
+			var n="";
+			for(var i=0;i<obj.length;i++){
+				n+=obj[i].createdate;
+			}
+			
+  			$("div").html(n);
+  		});
+		
+		});
+	
+	</script>
   </head>
   
   <body>
-   <%
-    %>
+  	<div></div>
   </body>
 </html>

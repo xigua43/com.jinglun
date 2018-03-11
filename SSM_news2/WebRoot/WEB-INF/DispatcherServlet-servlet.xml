@@ -15,8 +15,20 @@
 	</context:component-scan>
 	<!--开启放行静态资源-->
 	<mvc:default-servlet-handler/>
-	<!--开启mvc注解驱动-->
-	<mvc:annotation-driven></mvc:annotation-driven>
+	<!--开启mvc注解驱动(默认开启string转换器，没有date转换器)-->
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+	</bean>
+	<mvc:annotation-driven conversion-service="conversionService">
+		<mvc:message-converters register-defaults="false">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json;charset=utf-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 	<!--配置视图解析器-->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/"></property>

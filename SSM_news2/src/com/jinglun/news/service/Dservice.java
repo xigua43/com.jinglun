@@ -15,7 +15,6 @@ public class Dservice {
 	@Autowired
 	private detailMapper detailMapper;
 	public List<detail> findall(){
-		PageHelper.startPage(1,2);
 		return detailMapper.selectByExample(null);
 	}
 }	
