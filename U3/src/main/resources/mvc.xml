@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<context:component-scan base-package="com.jinglun.news.controller" use-default-filters="false">
+		<!-- 只包含controller控制器 -->
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	<!--开启放行静态资源-->
+	<mvc:default-servlet-handler/>
+	<!--自定义类型转换器-->
+ 	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<bean class="com.jinglun.news.controller.Dateconverter">
+					<property name="str" value="yyyy-MM-dd"></property>
+				</bean>
+			</set>
+	</property>
+		
+	</bean>
+	
+	<mvc:annotation-driven conversion-service="conversionService"> 
+		<!--处理http中文乱码-->
+ 		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+			            <value>text/html;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>	
+	<!--配置视图解析器-->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	<!--文件上传-->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+		<property name="maxUploadSize" value="10240000"></property>
+		<property name="resolveLazily" value="true"></property>
+	</bean>
+	<!--国际化  -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="zh"></property>
+	</bean>
+	<!--配置自定义拦截器-->
+	<!-- <mvc:interceptors>
+		<bean class="interceptors.First_interceptor"></bean>
+		指定拦截器作用域那些路径
+		<mvc:interceptor>
+			<mvc:mapping path="路径"/>
+			<bean class="interceptors.First_interceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+</beans>
