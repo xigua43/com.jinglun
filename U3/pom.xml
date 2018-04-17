@@ -78,6 +78,12 @@
 			<version>${jackson.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
 		<!-- 谷歌GSON -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -316,7 +322,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		
+
 	</build>
 
 </project>
