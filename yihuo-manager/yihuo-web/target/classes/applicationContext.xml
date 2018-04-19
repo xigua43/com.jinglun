@@ -61,7 +61,7 @@
 	
 	<!--配置实物切点-->
 	<aop:config>
-		<aop:pointcut expression="execution(*com.jinglun.yihuo.service.*.*(..))" id="txpointcut"/>
+		<aop:pointcut expression="execution(* com.jinglun.yihuo.service.*.*(..))" id="txpointcut"/>
 		<aop:advisor advice-ref="tx" pointcut-ref="txpointcut"/>
 	</aop:config>
 	
