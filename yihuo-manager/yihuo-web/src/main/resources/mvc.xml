@@ -14,7 +14,6 @@
 	
 	<!--开启放行静态资源-->
 	<mvc:default-servlet-handler/>
-	
 	<!--自定义类型转换器-->
  	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
 		<property name="converters">
